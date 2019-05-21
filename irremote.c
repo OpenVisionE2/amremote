@@ -188,8 +188,6 @@ int main(int argc, char* argv[])
         fclose(fp);
         }
 
-    ioctl(device_fd, REMOTE_IOC_RESET_KEY_MAPPING, NULL);
-
     for (j = 0; j < CUSTOM_REMOTE_MAX; j++)
     {
         remote_config_t *custom_remote = remotes[j];
@@ -198,6 +196,7 @@ int main(int argc, char* argv[])
 
         custom_remote->factory_code >>= 16;
         set_config(custom_remote, device_fd);
+        ioctl(device_fd, REMOTE_IOC_RESET_KEY_MAPPING, NULL);
 
         for (i = 0; i < 256; i++)
             if (custom_remote->key_map[i] != KEY_RESERVED) {
